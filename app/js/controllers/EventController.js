@@ -1,19 +1,16 @@
 'use strict';
 
 eventsApp.controller('EventController',
-    function EventController($scope, eventData, $log) {
+    function EventController($scope, eventData, $routeParams, $route) {
         $scope.sortorder = 'name';
-        eventData.getEvent()
-            .success(function (event) {
-                $scope.event = event;
-            })
-            .error(function (data, status, headers, config) {
-                $log.warn(data, status, headers, config);
-            });
-        $scope.upVoteSession = function(session) {
+        $scope.reload = function() {
+            $route.reload();
+        };
+        $scope.event = $route.current.locals.event;
+        $scope.upVoteSession = function (session) {
             session.upVoteCount++;
         };
-        $scope.downVoteSession = function(session) {
+        $scope.downVoteSession = function (session) {
             session.upVoteCount--;
         };
     }
